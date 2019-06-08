@@ -38,7 +38,7 @@ with open('input1.csv') as csv_file:
             for i in range(0,70):
                 la=(random.randrange(lat-50000,lat+50000, 1))/10000
                 lo=(random.randrange(lon-50000, lon+50000, 1))/10000
-                fe=random.randint(0,4)
+                fe=random.randint(0,9)
                 fr=random.randint(0,9)
                 with open('output.csv', mode='a', newline='') as output:
                     writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -53,14 +53,15 @@ print(b)
 for i in range(0,300):
         la=(random.randrange(19000,30000))/1000
         lo=(random.randrange(68000, 83000))/1000
-        fe=random.randint(0,4)
+        fe=random.randint(0,9)
         fr=random.randint(0,9)
+        a+=fe
+        b+=fr
         line_count += 1
         with open('output.csv', mode='a', newline='') as output:
             writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             writer.writerow([lo, la, fe, fr])
-            a+=fe
-            b+=fr
+            
 
 
 mean_feed = int(a/line_count)

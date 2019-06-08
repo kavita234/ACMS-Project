@@ -15,21 +15,21 @@ with open('input1.csv') as csv_file:
     line_count = 0
     for row in csv_reader:
             
-            lat=int(row[3])
-            lon=int(row[4])
+            lat=int(row[1])
+            lon=int(row[2])
             #print(lat," ",lon)
             line_count += 1
             i=0
-            for i in range(0,70):
-                la=(random.randrange(lat-10000,lat+10000, 1))/10000
-                lo=(random.randrange(lon-10000, lon+10000, 1))/10000
+            for i in range(0,10000):
+                la=(random.randrange(lat-1000000,lat+1000000, 1))/1000000
+                lo=(random.randrange(lon-1000000, lon+1000000, 1))/1000000
                 with open('outjtu.csv', mode='a', newline='') as output:
                     writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                     writer.writerow([lo, la])
 i=0
-for i in range(0,300):
-        la=(random.randrange(19000,30000))/1000
-        lo=(random.randrange(68000, 83000))/1000
+for i in range(0,2000):
+        la=(random.randrange(190000,300000))/10000
+        lo=(random.randrange(680000, 830000))/10000
         with open('outjtu.csv', mode='a', newline='') as output:
             writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             writer.writerow([lo, la])
