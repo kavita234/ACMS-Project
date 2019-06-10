@@ -10,7 +10,7 @@ import random
 import csv
 
 
-with open('input1.csv') as csv_file:
+with open('input3.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
     for row in csv_reader:
@@ -20,19 +20,23 @@ with open('input1.csv') as csv_file:
             #print(lat," ",lon)
             line_count += 1
             i=0
-            for i in range(0,10000):
-                la=(random.randrange(lat-1000000,lat+1000000, 1))/1000000
-                lo=(random.randrange(lon-1000000, lon+1000000, 1))/1000000
+            for i in range(0,300):
+                la=(random.randrange(lat-5000000,lat+5000000, 1))/1000000
+                lo=(random.randrange(lon-5000000, lon+5000000, 1))/1000000
+                fe=random.randint(0,9)
+                fr=random.randint(0,9)
                 with open('outjtu.csv', mode='a', newline='') as output:
                     writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                    writer.writerow([lo, la])
+                    writer.writerow([lo, la, fe, fr])
 i=0
 for i in range(0,2000):
-        la=(random.randrange(190000,300000))/10000
-        lo=(random.randrange(680000, 830000))/10000
+        la=(random.randrange(20000,30000))/1000
+        lo=(random.randrange(70000,80000))/1000
+        fe=random.randint(0,9)
+        fr=random.randint(0,9)
         with open('outjtu.csv', mode='a', newline='') as output:
             writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            writer.writerow([lo, la])
+            writer.writerow([lo, la, fe, fr])
 
 
 # In[46]:
