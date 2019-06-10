@@ -20,12 +20,12 @@ with open('input3.csv') as csv_file:
             #print(lat," ",lon)
             line_count += 1
             i=0
-            for i in range(0,300):
-                la=(random.randrange(lat-5000000,lat+5000000, 1))/1000000
-                lo=(random.randrange(lon-5000000, lon+5000000, 1))/1000000
+            for i in range(0,7000):
+                la=(random.randrange(lat-10000000,lat+10000000, 1))/1000000
+                lo=(random.randrange(lon-10000000, lon+10000000, 1))/1000000
                 fe=random.randint(0,9)
                 fr=random.randint(0,9)
-                with open('outjtu.csv', mode='a', newline='') as output:
+                with open('outjtu3.csv', mode='a', newline='') as output:
                     writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                     writer.writerow([lo, la, fe, fr])
 i=0
@@ -34,7 +34,7 @@ for i in range(0,2000):
         lo=(random.randrange(70000,80000))/1000
         fe=random.randint(0,9)
         fr=random.randint(0,9)
-        with open('outjtu.csv', mode='a', newline='') as output:
+        with open('outjtu3.csv', mode='a', newline='') as output:
             writer = csv.writer(output, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             writer.writerow([lo, la, fe, fr])
 
@@ -42,7 +42,7 @@ for i in range(0,2000):
 # In[46]:
 
 
-data_file = np.loadtxt('outjtu.csv',delimiter=',')
+data_file = np.loadtxt('outjtu3.csv',delimiter=',')
 longitude = data_file[:,0]
 latitude = data_file[:,1]
 #x=list(data_file)
