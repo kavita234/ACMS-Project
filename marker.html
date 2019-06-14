@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #h1{
+          background-color: green;
+          margin-bottom:5pt;
+          height: 50pt; 
+          border-radius: 5pt;
+        }
+         input[type="file"]
+         {
+             width: 60%;
+             height: 30pt;
+             align-items:center;
+             color: Blue;
+             border: 2px solid black; 
+             border-radius: 5px;
+             float:left;
+             font-size: 30px;
+             padding:0em;
+
+         }
+         input[type="button"]
+         {
+             height: 30pt;
+             border-radius: 5px;
+             float: left;
+             width:37%;
+             text-align: center;
+             margin-left: 20pt;
+             background-color:green;
+             border:2px solid black;
+             color:White;
+             font-weight: 900;
+             font-size: 30px;
+
+         }
+        
+         h1{
+             float:left;
+             width:100%;
+             text-align: center;
+             font-size:20pt;
+             color:white;
+             }
+        #map{
+          height: 330pt;
+          width: 100%;
+         float: left;
+         margin-top: 5pt;
+         background-color:grey;
+        }
+       </style>
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+<link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+
+</head>
+<body>
+  <div id="h1">
+  <h1>Cluster Centers Marked on Map</h1>
+</div>
+  <input type="file" id="fileUpload" />
+  <input type="button" id="upload" value="Upload" onclick="addMarkersToMap()" />
+  <div id="map" />
+  <script>
+      function addMarkersToMap()
+      {
+        var arr=[];
+        var platform = new H.service.Platform({
+                    app_id: 'devportal-demo-20180625',
+                    app_code: '9v2BkviRwi9Ot26kp2IysQ',
+                    useHTTPS: true
+                  });
+                  var pixelRatio = window.devicePixelRatio || 1;
+                  var defaultLayers = platform.createDefaultLayers({
+                    tileSize: pixelRatio === 1 ? 256 : 512,
+                    ppi: pixelRatio === 1 ? undefined : 320
+                  });
+                  var map = new H.Map(document.getElementById('map'),
+                    defaultLayers.normal.map,{
+                    center: {lat:50, lng:5},
+                    zoom: 14,
+                    pixelRatio: pixelRatio
+                  });
+                  var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+                  
+                  // Create the default UI components
+                  var ui = H.ui.UI.createDefault(map, defaultLayers);
+      
+        var fileUpload = document.getElementById("fileUpload");
+          var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
+          if (regex.test(fileUpload.value.toLowerCase())) {
+              if (typeof (FileReader) != "undefined") {
+                  var reader = new FileReader();
+                  reader.onload = (e) => {
+                      var rows = e.target.result.split("\n");
+                      for (var i = 0; i < rows.length; i++) {
+                          var cells = rows[i].split(",");
+                          if (cells.length > 1) {
+                              for (var j = 0; j < cells.length; j=j+2) 
+                              {
+                                  var x = new H.map.Marker({lat:cells[j+1], lng:cells[j]});
+                                  arr=[...arr,(x)];  
+                               }  
+                              }
+                          }
+                      
+                      console.log(typeof(arr[0]));
+                  group = new H.map.Group();
+                  group.addObjects(arr);
+                  map.addObject(group);
+                  map.setViewBounds(group.getBounds());
+                }
+                 
+                  reader.readAsText(fileUpload.files[0]);
+              } else {
+                  alert("This browser does not support HTML5.");
+              }
+          } else {
+              alert("Please upload a valid CSV file.");
+          }
+      }
+      
+      </script>
+      
+  </body>
+</html>
